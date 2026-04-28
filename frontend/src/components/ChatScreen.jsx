@@ -144,7 +144,7 @@ export default function ChatScreen({ manual, onChangeManual, dark, onToggleDark 
           {messages.length === 0 && (
             <div className="text-center text-zinc-400 dark:text-zinc-500 text-sm mt-12">
               <p className="mb-2">Ask about a problem with your bike.</p>
-              <p className="text-xs">e.g. "My engine makes a knocking sound when I accelerate" — or attach a photo.</p>
+              <p className="text-xs">e.g. "My brake pads are worn out, how do I replace them?" — or attach a photo.</p>
             </div>
           )}
 
