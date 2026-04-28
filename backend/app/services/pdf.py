@@ -60,3 +60,23 @@ def sparse_page_ratio(pages: list[str]) -> float:
         return 0.0
     sparse = sum(1 for p in pages if len(p.strip()) < 50)
     return sparse / len(pages)
+
+
+_BIKE_TERMS = re.compile(
+    r"\b(?:engine|motorcycle|motorbike|scooter|moped|wheel|brake|throttle|clutch|"
+    r"chain|sprocket|tyre|tire|carburetor|carburettor|exhaust|transmission|gearbox|"
+    r"spark\s*plug|coolant|torque|crankshaft|piston|cylinder|handlebar|fork|"
+    r"suspension|oil\s*filter|air\s*filter|fuel\s*tank|footpeg|kickstand|"
+    r"owner.?s\s*manual|service\s*manual|workshop\s*manual|rider|riding)\b",
+    re.IGNORECASE,
+)
+
+_MIN_BIKE_TERMS = 4
+_SAMPLE_PAGES = 15
+
+
+def is_bike_manual(pages: list[str]) -> bool:
+    """Return True if the document looks like a bike/motorcycle manual."""
+    sample = " ".join(pages[:_SAMPLE_PAGES])
+    unique_matches = {m.group().lower().split()[0] for m in _BIKE_TERMS.finditer(sample)}
+    return len(unique_matches) >= _MIN_BIKE_TERMS

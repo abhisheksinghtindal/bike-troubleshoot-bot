@@ -4,7 +4,7 @@ from __future__ import annotations
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from ..config import settings
-from ..services.pdf import extract_pages, sparse_page_ratio
+from ..services.pdf import extract_pages, is_bike_manual, sparse_page_ratio
 from ..store import store
 
 router = APIRouter(prefix="/api/manuals", tags=["manuals"])
@@ -44,6 +44,12 @@ async def upload_manual(file: UploadFile = File(...)) -> dict:
         raise HTTPException(
             status_code=400,
             detail="No text could be extracted from this PDF. It may be a scanned image — OCR is not supported.",
+        )
+
+    if not is_bike_manual(pages):
+        raise HTTPException(
+            status_code=422,
+            detail="This doesn't look like a bike or motorcycle manual. Please upload an owner's manual or service manual for your bike.",
         )
 
     manual = store.add(filename=file.filename or "manual.pdf", pages=pages)
