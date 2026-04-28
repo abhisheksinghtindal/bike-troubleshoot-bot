@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# Environment — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Frontend build output
+frontend/dist/
+
+# User data — uploaded manuals live here, not for git
+backend/data/
+
+# macOS
+.DS_Store
+
+# Virtual environments
+.venv/
+venv/
+env/
