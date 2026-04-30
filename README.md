@@ -192,10 +192,3 @@ Use these to show off the bot in an interview:
 - **No OCR** — scanned PDFs (image-only) won't extract any text. Adding Tesseract or Anthropic's PDF support to the upload pipeline would handle this.
 - **Eval harness** — for production I'd build a small eval set ("questions that should be answered", "questions that should be refused", "questions that need citations") and gate prompt changes on it.
 
----
-
-## Tech notes for the interviewer
-
-- **Why Claude over GPT-4o / Gemini?** Vision quality on photos of physical objects is excellent, prompt caching is built in (huge cost win for this access pattern), and the 200K context window makes the no-RAG approach viable.
-- **Why FastAPI?** Fast to scaffold, async-first, automatic OpenAPI docs at `/docs`, easy to deploy in a slim container.
-- **Why Vite + Tailwind?** Zero-config React with fast HMR, Tailwind keeps styling inline so you can read each component end-to-end.
