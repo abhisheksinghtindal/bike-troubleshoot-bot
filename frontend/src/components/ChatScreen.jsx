@@ -55,7 +55,8 @@ export default function ChatScreen({ manual, onChangeManual, dark, onToggleDark 
     const q = input.trim()
     if (!q || busy) return
 
-    const userMsg = { role: 'user', text: q, imagePreview }
+    const hadImage = !!image
+    const userMsg = { role: 'user', text: q, imagePreview, hadImage }
     setMessages((m) => [...m, userMsg])
     setInput('')
     const sentImage = image
@@ -63,7 +64,11 @@ export default function ChatScreen({ manual, onChangeManual, dark, onToggleDark 
     setBusy(true)
 
     try {
-      const history = messages.map((m) => ({ role: m.role, text: m.text }))
+      // Include "[Image attached]" in history text so Claude knows prior turns had visual context
+      const history = messages.map((m) => ({
+        role: m.role,
+        text: m.hadImage ? `[Image attached]\n${m.text}` : m.text,
+      }))
       const result = await askQuestion({ manualId: manual.id, question: q, image: sentImage, history })
       setMessages((m) => [...m, {
         role: 'assistant',
